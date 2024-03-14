@@ -37,7 +37,6 @@ class FinancialGoalRepositoryTest {
                 .achievedDate(LOCAL_DATE)
                 .amount(AMOUNT)
                 .build();
-
     }
 
     @Test

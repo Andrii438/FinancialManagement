@@ -4,6 +4,7 @@ import com.example.financemanagement.entity.User;
 import com.example.financemanagement.entity.builder.UserBuilder;
 import com.example.financemanagement.exception.UserNotFoundException;
 import com.example.financemanagement.repository.UserRepository;
+import com.example.financemanagement.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -94,7 +95,7 @@ class UserServiceImplTest {
         verify(userRepository).findById(ID);
     }
 
-    @Test()
+    @Test
     void findUserByIdThrowsAnException() {
         assertThrows(UserNotFoundException.class, () -> userService.findUserById(ID));
     }

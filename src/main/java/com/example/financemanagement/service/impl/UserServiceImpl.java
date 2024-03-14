@@ -1,8 +1,9 @@
-package com.example.financemanagement.service;
+package com.example.financemanagement.service.impl;
 
 import com.example.financemanagement.entity.User;
 import com.example.financemanagement.exception.UserNotFoundException;
 import com.example.financemanagement.repository.UserRepository;
+import com.example.financemanagement.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
