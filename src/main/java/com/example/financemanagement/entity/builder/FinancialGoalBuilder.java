@@ -13,7 +13,9 @@ public class FinancialGoalBuilder {
     private BigDecimal amount;
     private User user;
 
+
     public FinancialGoalBuilder() {
+        //Empty constructor
     }
 
     public FinancialGoalBuilder id(Long id) {

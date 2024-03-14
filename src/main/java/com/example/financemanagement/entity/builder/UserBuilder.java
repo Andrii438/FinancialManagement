@@ -15,7 +15,9 @@ public class UserBuilder {
     private String username;
     private List<FinancialGoal> financialGoals = new ArrayList<>();
 
+
     public UserBuilder() {
+        //Empty constructor
     }
 
     public UserBuilder id(Long id) {

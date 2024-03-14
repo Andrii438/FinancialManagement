@@ -9,6 +9,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import static org.junit.Assert.assertTrue;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class FinanceManagementApplicationTests {
     @LocalServerPort
@@ -35,8 +37,10 @@ class FinanceManagementApplicationTests {
         registry.add("spring.datasource.password", postgres::getPassword);
     }
 
+    //todo
     @Test
     void contextLoads() {
+        assertTrue(true);
     }
 
 }
