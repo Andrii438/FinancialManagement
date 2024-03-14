@@ -20,7 +20,7 @@ jobs:
           chmod +x gradlew
           ./gradlew build
       - name: Analyze code with SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v4
+        uses: sonarsource/sonarcloud-github-action@master
         env:
           SONAR_TOKEN: b09d5a5be75d33a2997cc813f382e2215da72073
         with:
