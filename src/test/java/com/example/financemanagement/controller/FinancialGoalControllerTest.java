@@ -3,10 +3,13 @@ package com.example.financemanagement.controller;
 import com.example.financemanagement.entity.FinancialGoal;
 import com.example.financemanagement.entity.builder.FinancialGoalBuilder;
 import com.example.financemanagement.service.FinancialGoalService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -16,8 +19,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(FinancialGoalController.class)
@@ -25,10 +30,12 @@ class FinancialGoalControllerTest {
 
     public static final String FIND_BY_ID = "/v1/financial-goal/{id}";
     public static final String FIND_ALL = "/v1/financial-goal/";
+    public static final String CREATE = "/v1/financial-goal/create";
     public static final String GOAL_NAME = "Children";
     public static final String AMOUNT = "1000";
     public static final String ACHIEVED_DATE = "2030-12-31";
     public static final Long GOAL_ID = 1L;
+    public static final long ID = 10L;
 
     @Autowired
     private MockMvc mockMvc;
@@ -84,6 +91,27 @@ class FinancialGoalControllerTest {
                 .contains(GOAL_NAME)
                 .contains(AMOUNT)
                 .contains(ACHIEVED_DATE);
+    }
+
+    @Test
+    public void testCreateFinancialGoal() throws Exception {
+        financialGoal.setId(ID);
+        when(financialGoalService.createOrUpdateFinancialGoal(financialGoal)).thenReturn(financialGoal);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String json = mapper.writeValueAsString(financialGoal);
+
+        MvcResult mvcResult = mockMvc.perform(post(CREATE, financialGoal)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        assertThat(mvcResult.getResponse().getHeader("Location"))
+                .contains("http://localhost:8081/v1/financial-goal/10");
+
+        verify(financialGoalService).createOrUpdateFinancialGoal(financialGoal);
     }
 
 }
