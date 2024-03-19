@@ -44,4 +44,10 @@ public class FinancialGoalController {
         return ResponseEntity.created(URI.create("http://localhost:8081/v1/financial-goal/" + savedGoal.getId()))
                 .build();
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteFinancialGoal(@PathVariable Long id){
+        financialGoalService.deleteFinancialGoalById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
