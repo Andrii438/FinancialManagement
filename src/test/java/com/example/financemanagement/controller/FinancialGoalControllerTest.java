@@ -113,10 +113,24 @@ class FinancialGoalControllerTest {
     }
 
     @Test
-    public void testDeleteMethod() throws Exception {
+    public void testDeleteMethodById() throws Exception {
         mockMvc.perform(delete(FIND_BY_ID, ID))
                 .andExpect(status().isNoContent());
 
         verify(financialGoalService).deleteFinancialGoalById(ID);
+    }
+
+    @Test
+    public void testDeleteMethodByGoal() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String json = mapper.writeValueAsString(financialGoal);
+
+        mockMvc.perform(delete(FIND_ALL, financialGoal)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isNoContent());
+
+        verify(financialGoalService).deleteFinancialGoal(financialGoal);
     }
 }

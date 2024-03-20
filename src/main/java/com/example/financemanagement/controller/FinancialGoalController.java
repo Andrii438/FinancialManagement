@@ -50,4 +50,11 @@ public class FinancialGoalController {
         financialGoalService.deleteFinancialGoalById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteFinancialGoal(@RequestBody FinancialGoal financialGoal){
+        financialGoalService.deleteFinancialGoal(financialGoal);
+        return ResponseEntity.noContent().build();
+    }
+
 }
