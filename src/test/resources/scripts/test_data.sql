@@ -1,4 +1,4 @@
-CREATE TABLE financial_user (
+CREATE TABLE IF NOT EXISTS financial_user (
                                 id SERIAL PRIMARY KEY,
                                 first_name VARCHAR(255),
                                 surname VARCHAR(255),
@@ -6,7 +6,7 @@ CREATE TABLE financial_user (
                                 username VARCHAR(255)
 );
 
-CREATE TABLE financial_goal (
+CREATE TABLE IF NOT EXISTS financial_goal (
                                 id SERIAL PRIMARY KEY,
                                 goal_name VARCHAR(255),
                                 achieved_date DATE,
@@ -14,10 +14,6 @@ CREATE TABLE financial_goal (
                                 user_id BIGINT,
                                 CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES financial_user(id)
 );
-
-
--- delete from financial_goal;
---
 
 
 INSERT INTO financial_user (first_name, surname, birthdate, username)

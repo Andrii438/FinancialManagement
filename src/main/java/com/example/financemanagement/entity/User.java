@@ -30,6 +30,6 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<FinancialGoal> financialGoals = new ArrayList<>();
 }
