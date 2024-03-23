@@ -13,8 +13,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 @DataJpaTest
 @AutoConfigureTestDatabase(
@@ -44,22 +45,22 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void shouldFindAllUsers(){
+    void shouldFindAllUsers(){
         List<User> users = repository.findAll();
 
-        assertThat(users).isNotNull();
-        assertThat(users.size()).isEqualTo(3);
+        assertThat(users).isNotNull()
+                .hasSize(3);
     }
 
     @Test
-    public void shouldSaveUser(){
+    void shouldSaveUser(){
         List<User> usersBefore = repository.findAll();
 
         repository.save(user);
 
         List<User> usersAfter = repository.findAll();
 
-        assertThat(usersBefore.size()).isLessThan(usersAfter.size());
+        assertThat(usersBefore).hasSizeLessThan(usersAfter.size());
         assertTrue(usersAfter.contains(user));
 
         User savedUser = usersAfter.stream()
@@ -73,17 +74,18 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void shouldFindById(){
+    void shouldFindById(){
         user.setId(ID);
         repository.save(user);
         Optional<User> foundUser = repository.findById(ID);
 
-        assertThat(foundUser).isNotNull();
-        assertThat(foundUser.get()).isEqualTo(user);
+        assertThat(foundUser)
+                .isNotNull()
+                .contains(user);
     }
 
     @Test
-    public void shouldDeleteUser(){
+    void shouldDeleteUser(){
         repository.save(user);
         Long userId = user.getId();
         List<User> usersBefore = repository.findAll();
@@ -91,7 +93,7 @@ class UserRepositoryTest {
         repository.deleteById(userId);
         List<User> usersAfter = repository.findAll();
 
-        assertThat(usersBefore.size()).isGreaterThan(usersAfter.size());
+        assertThat(usersBefore).hasSizeGreaterThan(usersAfter.size());
         assertFalse(usersAfter.contains(user));
     }
 }

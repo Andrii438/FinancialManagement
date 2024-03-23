@@ -29,7 +29,6 @@ class UserControllerTest {
     public static final String FIND_BY_ID = "/v1/user/{id}";
     public static final String FIND_ALL = "/v1/user/";
     public static final String CREATE = "/v1/user/create";
-    public static final Long GOAL_ID = 1L;
     public static final long ID = 10L;
 
     public static final LocalDate LOCAL_DATE = LocalDate.of(1997, 12, 22);
@@ -51,7 +50,7 @@ class UserControllerTest {
             .build();
 
     @Test
-    public void testGetAllUsers_Success() throws Exception {
+    void testGetAllUsers_Success() throws Exception {
 
         List<User> mockGoals = Collections.singletonList(user);
 
@@ -71,7 +70,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void testGetUsers_NoResult() throws Exception {
+    void testGetUsers_NoResult() throws Exception {
         when(userService.findAllUsers()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get(FIND_ALL))
@@ -79,7 +78,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void testGetUserById_Success() throws Exception {
+    void testGetUserById_Success() throws Exception {
 
         when(userService.findUserById(ID)).thenReturn(user);
 
@@ -97,7 +96,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void testCreateUser() throws Exception {
+    void testCreateUser() throws Exception {
         user.setId(ID);
         when(userService.createOrUpdateUser(user)).thenReturn(user);
 
@@ -118,7 +117,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void testDeleteMethodById() throws Exception {
+    void testDeleteMethodById() throws Exception {
         mockMvc.perform(delete(FIND_BY_ID, ID))
                 .andExpect(status().isNoContent());
 
@@ -126,7 +125,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void testDeleteMethodByGoal() throws Exception {
+    void testDeleteMethodByGoal() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String json = mapper.writeValueAsString(user);

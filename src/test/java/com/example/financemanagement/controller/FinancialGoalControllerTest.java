@@ -48,7 +48,7 @@ class FinancialGoalControllerTest {
             .build();
 
     @Test
-    public void testGetAllFinancialGoals_Success() throws Exception {
+    void testGetAllFinancialGoals_Success() throws Exception {
 
         List<FinancialGoal> mockGoals = Collections.singletonList(financialGoal);
 
@@ -67,7 +67,7 @@ class FinancialGoalControllerTest {
     }
 
     @Test
-    public void testGetFinancialGoals_NoResult() throws Exception {
+    void testGetFinancialGoals_NoResult() throws Exception {
         when(financialGoalService.findAllFinancialGoals()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get(FIND_ALL))
@@ -75,7 +75,7 @@ class FinancialGoalControllerTest {
     }
 
     @Test
-    public void testGetFinancialGoalById_Success() throws Exception {
+    void testGetFinancialGoalById_Success() throws Exception {
 
         when(financialGoalService.findFinancialGoalById(GOAL_ID)).thenReturn(financialGoal);
 
@@ -92,7 +92,7 @@ class FinancialGoalControllerTest {
     }
 
     @Test
-    public void testCreateFinancialGoal() throws Exception {
+    void testCreateFinancialGoal() throws Exception {
         financialGoal.setId(ID);
         when(financialGoalService.createOrUpdateFinancialGoal(financialGoal)).thenReturn(financialGoal);
 
@@ -113,7 +113,7 @@ class FinancialGoalControllerTest {
     }
 
     @Test
-    public void testDeleteMethodById() throws Exception {
+    void testDeleteMethodById() throws Exception {
         mockMvc.perform(delete(FIND_BY_ID, ID))
                 .andExpect(status().isNoContent());
 
@@ -121,7 +121,7 @@ class FinancialGoalControllerTest {
     }
 
     @Test
-    public void testDeleteMethodByGoal() throws Exception {
+    void testDeleteMethodByGoal() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String json = mapper.writeValueAsString(financialGoal);

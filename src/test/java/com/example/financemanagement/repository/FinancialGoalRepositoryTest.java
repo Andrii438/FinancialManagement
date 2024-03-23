@@ -40,7 +40,7 @@ class FinancialGoalRepositoryTest {
     }
 
     @Test
-    public void shouldSaveTheGivenGoal() {
+    void shouldSaveTheGivenGoal() {
         int sizeBefore = financialGoalRepository.findAll().size();
 
         FinancialGoal saved = financialGoalRepository.saveAndFlush(financialGoal);
@@ -56,14 +56,14 @@ class FinancialGoalRepositoryTest {
     }
 
     @Test
-    public void shouldFindAllGoals() {
+    void shouldFindAllGoals() {
         int size = financialGoalRepository.findAll().size();
 
         assertThat(size).isEqualTo(3);
     }
 
     @Test
-    public void shouldDeleteTheGivenGoal() {
+    void shouldDeleteTheGivenGoal() {
         FinancialGoal saved = financialGoalRepository.save(financialGoal);
         int sizeBefore = financialGoalRepository.findAll().size();
 
@@ -74,7 +74,7 @@ class FinancialGoalRepositoryTest {
     }
 
     @Test
-    public void shouldUpdateTheGivenGoal() {
+    void shouldUpdateTheGivenGoal() {
         FinancialGoal saved = financialGoalRepository.saveAndFlush(financialGoal);
 
         BigDecimal updatedAmount = BigDecimal.valueOf(1500000);
