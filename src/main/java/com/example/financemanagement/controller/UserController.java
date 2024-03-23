@@ -4,11 +4,9 @@ import com.example.financemanagement.entity.User;
 import com.example.financemanagement.exception.UserNotFoundException;
 import com.example.financemanagement.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -38,24 +36,24 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-//
-//    @PostMapping("create")
-//    public ResponseEntity<FinancialGoal> createFinancialGoal(@RequestBody FinancialGoal financialGoal) {
-//        FinancialGoal savedGoal = financialGoalService.createOrUpdateFinancialGoal(financialGoal);
-//
-//        return ResponseEntity.created(URI.create("http://localhost:8081/v1/financial-goal/" + savedGoal.getId()))
-//                .build();
-//    }
-//
-//    @DeleteMapping("{id}")
-//    public ResponseEntity<Void> deleteFinancialGoal(@PathVariable Long id){
-//        financialGoalService.deleteFinancialGoalById(id);
-//        return ResponseEntity.noContent().build();
-//    }
-//
-//    @DeleteMapping
-//    public ResponseEntity<Void> deleteFinancialGoal(@RequestBody FinancialGoal financialGoal){
-//        financialGoalService.deleteFinancialGoal(financialGoal);
-//        return ResponseEntity.noContent().build();
-//    }
+
+    @PostMapping("create")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User savedUser = userService.createOrUpdateUser(user);
+
+        return ResponseEntity.created(URI.create("http://localhost:8081/v1/user/" + savedUser.getId()))
+                .build();
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteFinancialGoal(@PathVariable Long id){
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteFinancialGoal(@RequestBody User user){
+        userService.deleteUser(user);
+        return ResponseEntity.noContent().build();
+    }
 }

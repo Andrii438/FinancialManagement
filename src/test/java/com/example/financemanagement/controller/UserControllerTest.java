@@ -3,10 +3,13 @@ package com.example.financemanagement.controller;
 import com.example.financemanagement.entity.User;
 import com.example.financemanagement.entity.builder.UserBuilder;
 import com.example.financemanagement.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -15,8 +18,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
@@ -91,47 +95,47 @@ class UserControllerTest {
                 .contains(USERNAME)
                 .contains(LOCAL_DATE.toString());
     }
-//
-//    @Test
-//    public void testCreateFinancialGoal() throws Exception {
-//        financialGoal.setId(ID);
-//        when(financialGoalService.createOrUpdateFinancialGoal(financialGoal)).thenReturn(financialGoal);
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.registerModule(new JavaTimeModule());
-//        String json = mapper.writeValueAsString(financialGoal);
-//
-//        MvcResult mvcResult = mockMvc.perform(post(CREATE, financialGoal)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(json))
-//                .andExpect(status().isCreated())
-//                .andReturn();
-//
-//        assertThat(mvcResult.getResponse().getHeader("Location"))
-//                .contains("http://localhost:8081/v1/financial-goal/10");
-//
-//        verify(financialGoalService).createOrUpdateFinancialGoal(financialGoal);
-//    }
-//
-//    @Test
-//    public void testDeleteMethodById() throws Exception {
-//        mockMvc.perform(delete(FIND_BY_ID, ID))
-//                .andExpect(status().isNoContent());
-//
-//        verify(financialGoalService).deleteFinancialGoalById(ID);
-//    }
-//
-//    @Test
-//    public void testDeleteMethodByGoal() throws Exception {
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.registerModule(new JavaTimeModule());
-//        String json = mapper.writeValueAsString(financialGoal);
-//
-//        mockMvc.perform(delete(FIND_ALL, financialGoal)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(json))
-//                .andExpect(status().isNoContent());
-//
-//        verify(financialGoalService).deleteFinancialGoal(financialGoal);
-//    }
+
+    @Test
+    public void testCreateUser() throws Exception {
+        user.setId(ID);
+        when(userService.createOrUpdateUser(user)).thenReturn(user);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String json = mapper.writeValueAsString(user);
+
+        MvcResult mvcResult = mockMvc.perform(post(CREATE, user)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        assertThat(mvcResult.getResponse().getHeader("Location"))
+                .contains("http://localhost:8081/v1/user/10");
+
+        verify(userService).createOrUpdateUser(user);
+    }
+
+    @Test
+    public void testDeleteMethodById() throws Exception {
+        mockMvc.perform(delete(FIND_BY_ID, ID))
+                .andExpect(status().isNoContent());
+
+        verify(userService).deleteUserById(ID);
+    }
+
+    @Test
+    public void testDeleteMethodByGoal() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        String json = mapper.writeValueAsString(user);
+
+        mockMvc.perform(delete(FIND_ALL, user)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isNoContent());
+
+        verify(userService).deleteUser(user);
+    }
 }
