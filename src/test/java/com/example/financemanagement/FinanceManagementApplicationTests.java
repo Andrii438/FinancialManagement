@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -22,7 +23,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql("/scripts/test_data.sql")
+@Sql(scripts = "/scripts/test_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class FinanceManagementApplicationTests {
 
     public static final LocalDate LOCAL_DATE = LocalDate.of(1997, 12, 22);
@@ -74,6 +75,7 @@ class FinanceManagementApplicationTests {
     }
 
     @Test
+    @DirtiesContext
     void postUserIntegrationTest() {
         User user = new UserBuilder()
                 .birthdate(LOCAL_DATE)
@@ -89,6 +91,32 @@ class FinanceManagementApplicationTests {
                 .post("/v1/user/create")
                 .then()
                 .statusCode(201)
-                .header("Location", "http://localhost:8081/v1/user/7");
+                .header("Location", "http://localhost:8081/v1/user/4");
+    }
+
+    @Test
+    @DirtiesContext
+    void deleteFinancialGoalIntegrationTest() {
+        given()
+              .contentType(ContentType.JSON)
+              .when()
+              .delete("/v1/user/1")
+              .then()
+              .statusCode(204);
+    }
+
+    @Test
+    void getFinancialGoalsIntegrationTest() {
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/v1/financial-goal/")
+                .then()
+                .statusCode(200)
+                .body(".", hasSize(3))
+                .body("[0].goalName", equalTo("Retirement"))
+                .body("[1].goalName", equalTo("Travel"))
+                .body("[2].goalName", equalTo("House Purchase"));
+
     }
 }

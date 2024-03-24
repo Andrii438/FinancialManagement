@@ -37,6 +37,8 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'io.rest-assured:rest-assured'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '6.1.5'
+
 }
 
 dependencyManagement {

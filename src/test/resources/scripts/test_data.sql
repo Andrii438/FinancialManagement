@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS financial_user, financial_goal;
+
 CREATE TABLE IF NOT EXISTS financial_user (
                                 id SERIAL PRIMARY KEY,
                                 first_name VARCHAR(255),
