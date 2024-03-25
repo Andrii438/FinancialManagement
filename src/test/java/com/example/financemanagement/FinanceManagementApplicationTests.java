@@ -117,6 +117,5 @@ class FinanceManagementApplicationTests {
                 .body("[0].goalName", equalTo("Retirement"))
                 .body("[1].goalName", equalTo("Travel"))
                 .body("[2].goalName", equalTo("House Purchase"));
-
     }
 }
